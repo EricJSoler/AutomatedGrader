@@ -26,3 +26,21 @@
 *.exe
 *.out
 *.app
+
+#//I added these for visual
+*.suo
+*.pdb
+*.tlog
+*.log
+
+
+#//Stole this from internet
+ipch/
+obj/
+GeneratedFiles/
+[Bb]in
+[Dd]ebug*/
+[Rr]elease*/
+LWFast/
+Ankh.NoLoad
+*.opensdf
