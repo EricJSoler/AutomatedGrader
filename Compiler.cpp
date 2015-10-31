@@ -105,6 +105,19 @@
 		ext="java";
 	}
 
+	javac::javac(string wdirectory)
+	{
+		prefix = "javac -d ";
+		ext = "java";
+		Lister files;
+		int count = files.filecounter(wdirectory);  //counts the number of files in the start directory
+		string *filenames = new string[count];	// makes an pointer to an array for working with names
+		filenames = files.listfiles(wdirectory); // lists all the files in that directory
+		//count = count;  //2 files named "." and "..." are always in the directory sets  to ignore those
+		Compilethis(wdirectory, filenames, count);
+
+	}
+
 	//constructs the data string for input to be compiled calls compiler at end
 	javac::javac(string dir, string* l,int s)
 	{
@@ -149,7 +162,7 @@
 		
 
 		LPSTR I = const_cast<LPSTR>(winput.c_str());
-		CreateProcessA("C:\\Program Files\\Java\\jdk1.7.0_25\\bin\\javac.exe",I, NULL, NULL,false, NULL, NULL, NULL, si, pi);
+		CreateProcessA("C:\\Program Files\\Java\\jdk1.8.0_65\\bin\\javac.exe",I, NULL, NULL,false, NULL, NULL, NULL, si, pi);
 		WaitForSingleObject(pi->hProcess, 3000);
 		//TerminateProcess(pi->hProcess, 0);
 

@@ -2,6 +2,7 @@
 #include <string>
 #include "Windows.h"
 #include <iostream>
+#include "Lister.h"
 using namespace std;
 #include <stdlib.h>
 
@@ -61,6 +62,8 @@ public:
 	string ext;
 	
 	javac();
+
+	javac(string a); //Compile everything in this directory
 	
 	javac(string , string* ,int ); //constructor  call this and all is well
 

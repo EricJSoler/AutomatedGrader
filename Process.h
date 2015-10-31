@@ -50,6 +50,7 @@ class JavaRunner:public ProcessRunner
 {
 public:
 	JavaRunner();
+	/*JavaRunner()*/
 	JavaRunner(string, string, string);
 	unsigned short int RunProcess(LPSTR);
 };

@@ -145,11 +145,12 @@ JavaRunner::JavaRunner(string dirname, string LFile, string output)
 {
 	//This variable is used to keep the original file name.
 	LPSTR LPfilename=	const_cast<LPSTR>(LFile.c_str());
-	string path="placeHolder -classpath ";
+	string path="-classpath ";
 	path.append(dirname);
 	path.append(" ");
-	path.append(LFile);
+	path.append("ArrayBasedDataStructuresDriver");
 	LPSTR Jpath = const_cast<LPSTR>(path.c_str());
+	cout << Jpath;
 	FileName = LFile;
 
 	//RunProcess will return 0 if the file finishes running before the timer expires. Otherwise, it will return 1.
@@ -171,16 +172,18 @@ JavaRunner::JavaRunner(string dirname, string LFile, string output)
 unsigned short int JavaRunner::RunProcess(LPSTR lpFileName)
 {
 		//Creates the process. placeHolder -classpath <path> <FileName> is the final contents of <lpFileName>.
-		CreateProcessA("C:\\Program Files\\Java\\jdk1.7.0_07\\bin\\java.exe", lpFileName, NULL, NULL, TRUE, NULL, NULL, NULL, si, pi);
-		if(WaitForSingleObject(pi->hProcess, 5000))
-		{
-			cout <<"\nProblem with file. " << FileName << endl;
+		//CreateProcessA("C:\\Program Files\\Java\\jdk1.8.0_65\\bin\\java.exe", lpFileName, NULL, NULL, TRUE, NULL, NULL, NULL, si, pi);
+	cout << "commandPrompt> " << lpFileName << endl;
+		CreateProcessA("Java", lpFileName, NULL, NULL, TRUE, NULL, NULL, NULL, si, pi);
+		//if(WaitForSingleObject(pi->hProcess, 5000000000))
+		//{
+		//	cout <<"\nProblem with file. " << FileName << endl;
 
-			TerminateProcess(pi->hProcess, 0);
-			RunProcessT();
-			return 1;
-		}
-		TerminateProcess(pi->hProcess, 0);
+			//TerminateProcess(pi->hProcess, 0);
+		//	RunProcessT();
+		//	return 1;
+		//}
+		//TerminateProcess(pi->hProcess, 0);
 		return 0;
 }
 

@@ -54,6 +54,7 @@
     return filetotal;
 }
 
+	
 	//counts files of a given name in a directory
     int Lister::filecounter(string dir,string name)
 {
