@@ -62,11 +62,7 @@ int ericsMain(string wdirectory) {
 	{
 		executableDirectories.push_back(*begin + "\\" + "CS0_compiled");
 	}
-	//get rid of .class extensions
-	for (std::vector<string>::iterator begin = executableDirectories.begin(); begin != executableDirectories.end(); begin++)
-	{
-	//	getRidOfClass(*(begin));
-	}
+
 	//Execute
 	string output = wdirectory + "\\" + "aOUTPUT.txt";
 
@@ -238,7 +234,7 @@ int main()
 
 		//directory.append(userinput);
 		cout << "enter directory for files " << endl;
-		directory = "C:\\Users\\ejsol\\Desktop\\test\\Active";
+		cin >> directory;
 		cout << "looking in this directory" << directory << endl;
 
 		wdirectory = directory.c_str();
