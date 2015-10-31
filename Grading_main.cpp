@@ -238,7 +238,7 @@ int main()
 
 		//directory.append(userinput);
 		cout << "enter directory for files " << endl;
-		cin >> directory;
+		directory = "C:\\Users\\ejsol\\Desktop\\test\\Active";
 		cout << "looking in this directory" << directory << endl;
 
 		wdirectory = directory.c_str();
