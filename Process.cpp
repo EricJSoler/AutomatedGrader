@@ -148,10 +148,10 @@ JavaRunner::JavaRunner(string dirname, string LFile, string output)
 	string path="placeholder -classpath ";
 	path.append(dirname);
 	path.append(" ");
-	path.append("ArrayBasedDataStructuresDriver");
+	path.append(LFile);
 	LPSTR Jpath = const_cast<LPSTR>(path.c_str());
-	cout << Jpath;
-	FileName = LFile;
+	//cout << Jpath;
+	FileName = dirname;
 
 	//RunProcess will return 0 if the file finishes running before the timer expires. Otherwise, it will return 1.
 	//Parameter is the full path to the file. This version is for executables.
@@ -173,9 +173,9 @@ unsigned short int JavaRunner::RunProcess(LPSTR lpFileName)
 {
 		//Creates the process. placeHolder -classpath <path> <FileName> is the final contents of <lpFileName>.
 		CreateProcessA("C:\\Program Files\\Java\\jdk1.8.0_65\\bin\\java.exe", lpFileName, NULL, NULL, TRUE, NULL, NULL, NULL, si, pi);
-	cout << "commandPrompt> " << lpFileName << endl;
+	//cout << "commandPrompt> " << lpFileName << endl;
 	//	CreateProcessA("Java", lpFileName, NULL, NULL, TRUE, NULL, NULL, NULL, si, pi);
-		if(WaitForSingleObject(pi->hProcess, 50000000))
+		if(WaitForSingleObject(pi->hProcess, 5000))
 		{
 			cout <<"\nProblem with file. " << FileName << endl;
 
