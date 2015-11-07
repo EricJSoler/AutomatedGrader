@@ -3,9 +3,12 @@
 #include <Windows.h>
 #include "Compiler.h"
 #include "Process.h"
+#include "NameParser.h"
+#include "Student.h"
 #include <direct.h>
 #include <vector>
-
+#include <map>
+string myDriver = "C:\\Users\\ejsol\\Desktop\\testDrive.java";
 void renamer(string, NameData);
 bool extension(string, string);
 int ericsMain(string wdiretory);
@@ -13,86 +16,104 @@ bool searchVectorForString(vector<string> vect, string value);
 string compilationName(string& readFileName);
 void getRidOfClass(string directory);
 void myProcess(string command);
-string concFiles(string* value, int count);
+string concFiles(string* value, int count);          
 
 bool EricsCode = true;
 string studentName(string& readFileName);
 
-int ericsMain(string wdirectory) {
-	vector<string> directories;
+void fillVectorOfStudents(vector<Student>& students, string wdirectory);
+
+void fillVectorOfStudents(vector<Student>& students, string wdirectory)
+{
 	Lister files;
 	int count = files.filecounter(wdirectory);  //counts the number of files in the start directory
 	string *filenames = new string[count];	// makes an pointer to an array for working with names
 	filenames = files.listfiles(wdirectory); // lists all the files in that directory
 	count = count - 2;  //2 files named "." and "..." are always in the directory sets  to ignore those
 
-//creates a data structure to process store and use all the data in the name and use it for compiling. 
-	NameData* allfiles = new NameData[count];
+						//creates a data structure to process store and use all the data in the name and use it for compiling. 
 
-	//RenameFiles
+						//RenameFiles
+	Student* activeStudent = nullptr;
 	for (int i = 2, j = 0; i < count + 2; i++, j++)//For some reason the first two files are blank and then the last 2 files get cut off so start at 2
 	{
 		string readFileName = filenames[i].c_str();
-		string sName = studentName(readFileName);
-		string compName = compilationName(readFileName);
-		allfiles[j].originalname = readFileName;
-		allfiles[j].student = sName;
-		allfiles[j].newname = compName;
-		allfiles[j].searchtag = sName + "_";
-		string dirName = wdirectory + "\\" + allfiles[j].searchtag;
-		if (!searchVectorForString(directories, dirName))
-		{
-			_mkdir(dirName.c_str());
-			directories.push_back(dirName);
+		string studentName = NameParser::studName1(readFileName);
+		bool found = false;
+		for (std::vector<Student>::iterator itr = students.begin(); itr != students.end(); itr++) {
+			if ((*itr).name == studentName) {
+				activeStudent = &(*itr);
+				found = true;
+				break;
+			}
 		}
-		string originalLocation = wdirectory + "\\" + readFileName;
-		string destination = dirName + "\\" + compName;
-		rename(originalLocation.c_str(), destination.c_str()); // renames
+		if (!found) {
+			activeStudent = new Student(wdirectory, studentName);
+		}
+		activeStudent->addFile(readFileName);
+		if (!found) {
+			students.push_back(*activeStudent);
+		}
 	}
-	//Send em off to javac
-	for (std::vector<string>::iterator begin = directories.begin(); begin != directories.end(); begin++)
-	{
-		javac j(*begin);
+}
 
+int ericsMain(string wdirectory) {
+	vector<Student> students;
+	fillVectorOfStudents(students, wdirectory);
+	for (std::vector<Student>::iterator itr = students.begin(); itr != students.end(); itr++) {
+		myDriver = itr->addDriver(myDriver);
+		int countOfFiles;
+		string* filesToCompile = itr->filesForCompilation(countOfFiles);
+		javac j;
+		string wDit = itr->wDir;
+		j.Compilethis(wDit, filesToCompile, countOfFiles);
 	}
 
-	//adjusts directory string to be executables directory
-	vector<string> executableDirectories;
-	for (std::vector<string>::iterator begin = directories.begin(); begin != directories.end(); begin++)
-	{
-		executableDirectories.push_back(*begin + "\\" + "CS0_compiled");
-	}
-
-	//Execute
-	string output = wdirectory + "\\" + "aOUTPUT.txt";
-
-	ofstream Output;
-	Output.open(output, ios::out | ios::app);
-	Output << "\n__________________________________________________________________________________\n";
-
-	for (std::vector<string>::iterator begin = executableDirectories.begin(); begin != executableDirectories.end(); begin++)
-	{
-		LPCSTR wexecutablesdir = (*begin).c_str();
-
-		//gets all files in the executables directory
-		int execount = files.filecounter(wexecutablesdir); //gets  # of files
-		string *exenames = new string[execount]; // makes array of proper size
-		exenames = files.listfiles(wexecutablesdir); // gets the file names
-		string filesConcatanated = concFiles(exenames, execount);
-
-//		cout << "filesConcatanated" << filesConcatanated << endl;
-		Output.close();
-		JavaRunner runner(*(begin), (filesConcatanated), output);
-		Output.open(output, ios::out | ios::app);
-		Output << "\n__________________________________________________________________________________\n";
-
-	}
-	Output.close();
-
-
-
-
-
+	//I wanna use sams class for this so yeah
+	
+//	//Send em off to javac
+//	for (std::vector<string>::iterator begin = directories.begin(); begin != directories.end(); begin++)
+//	{
+//		javac j(*begin);
+//	}
+//
+//	//adjusts directory string to be executables directory
+//	vector<string> executableDirectories;
+//	for (std::vector<string>::iterator begin = directories.begin(); begin != directories.end(); begin++)
+//	{
+//		executableDirectories.push_back(*begin + "\\" + "CS0_compiled");
+//	}
+//
+//	//Execute
+//	string output = wdirectory + "\\" + "aOUTPUT.txt";
+//
+//	ofstream Output;
+//	Output.open(output, ios::out | ios::app);
+//	Output << "\n__________________________________________________________________________________\n";
+//
+//	for (std::vector<string>::iterator begin = executableDirectories.begin(); begin != executableDirectories.end(); begin++)
+//	{
+//		LPCSTR wexecutablesdir = (*begin).c_str();
+//
+//		//gets all files in the executables directory
+//		int execount = files.filecounter(wexecutablesdir); //gets  # of files
+//		string *exenames = new string[execount]; // makes array of proper size
+//		exenames = files.listfiles(wexecutablesdir); // gets the file names
+//		string filesConcatanated = concFiles(exenames, execount);
+//
+////		cout << "filesConcatanated" << filesConcatanated << endl;
+//		Output.close();
+//		JavaRunner runner(*(begin), (filesConcatanated), output);
+//		Output.open(output, ios::out | ios::app);
+//		Output << "\n__________________________________________________________________________________\n";
+//
+//	}
+//	Output.close();
+//
+//
+//
+//
+//
 
 	return 0;
 }
@@ -221,7 +242,7 @@ int main()
 
 
 
-
+	ericsMain("C:\\Users\\ejsol\\Desktop\\submissions2");
 	// makes sure directory exists before proceding
 	LPCSTR wdirectory;
 	string directory;

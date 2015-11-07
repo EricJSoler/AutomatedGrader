@@ -82,13 +82,17 @@
     <ClCompile Include="Grading_main.cpp" />
     <ClCompile Include="Lister.cpp" />
     <ClCompile Include="Namedata.cpp" />
+    <ClCompile Include="NameParser.cpp" />
     <ClCompile Include="Process.cpp" />
+    <ClCompile Include="Student.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Compiler.h" />
     <ClInclude Include="Lister.h" />
     <ClInclude Include="NameData.h" />
+    <ClInclude Include="NameParser.h" />
     <ClInclude Include="Process.h" />
+    <ClInclude Include="Student.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
