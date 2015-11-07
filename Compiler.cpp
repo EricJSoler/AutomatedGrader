@@ -159,7 +159,6 @@
 		ZeroMemory(si, sizeof(*si));
 		si->cb = sizeof(*si);
 		ZeroMemory(pi, sizeof(*pi));
-		cout << winput << endl;
 		
 
 		LPSTR I = const_cast<LPSTR>(winput.c_str());

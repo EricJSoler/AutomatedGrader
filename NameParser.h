@@ -97,5 +97,17 @@ public:
 		return ans;
 	}
 
+	static string removeFileExtension(string read)
+	{
+		string ans = "";
+		for (int i = 0; i < read.size(); i++) {
+			if (read[i] == '.')
+				break;
+			else
+				ans += read[i];
+		}
+		return ans;
+	}
+
 };
 

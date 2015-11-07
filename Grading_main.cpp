@@ -58,6 +58,7 @@ void fillVectorOfStudents(vector<Student>& students, string wdirectory)
 }
 
 int ericsMain(string wdirectory) {
+	Lister files;
 	vector<Student> students;
 	fillVectorOfStudents(students, wdirectory);
 	for (std::vector<Student>::iterator itr = students.begin(); itr != students.end(); itr++) {
@@ -68,6 +69,39 @@ int ericsMain(string wdirectory) {
 		string wDit = itr->wDir;
 		j.Compilethis(wDit, filesToCompile, countOfFiles);
 	}
+	
+		//Execute
+		string output = wdirectory + "\\" + "aOUTPUT.txt";
+	
+		ofstream Output;
+		Output.open(output, ios::out | ios::app);
+		Output << "\n__________________________________________________________________________________\n";
+	
+		for (std::vector<Student>::iterator begin = students.begin(); begin != students.end(); begin++)
+		{
+			string durrr = begin->wDir + "\\" + "CS0_compiled";
+			cout << durrr << endl;
+			LPCSTR wexecutablesdir = durrr.c_str();
+
+			int execount = files.filecounter(wexecutablesdir); //gets  # of files
+			string *exenames = new string[execount]; // makes array of proper size
+			exenames = files.listfiles(wexecutablesdir); // gets the file names
+			string filesConcatanated = concFiles(exenames, execount);
+			
+			Output.close();
+			string fileName = begin->getCompDriver();
+			string wDirect = begin->wDir;
+			cout << endl << fileName << endl;
+			cout << wDirect << endl;
+			JavaRunner runner(durrr, fileName, output);
+			Output.open(output, ios::out | ios::app);        
+			Output << "\n__________________________________________________________________________________\n";
+	
+		}
+		Output.close();
+	
+	
+	
 
 	//I wanna use sams class for this so yeah
 	

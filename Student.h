@@ -81,5 +81,13 @@ public:
 		}
 		return x;
 	}
+
+	string getCompDriver()
+	{
+		if (studentMode)
+			return NameParser::removeFileExtension(sDriver);
+		else
+			return NameParser::removeFileExtension(myDriver);
+	}
 };
 
