@@ -4,7 +4,7 @@
 
 using namespace std;
 
-const string driver = "driv";
+const string driver = "dem";
 
 class NameParser {
 
