@@ -27,6 +27,9 @@
 *.out
 *.app
 
+#// I want to keep this .exe 
+!T.exe
+
 #//I added these for visual
 *.suo
 *.pdb
@@ -34,7 +37,7 @@
 *.log
 
 
-#//Stole this from internet
+#//Borrowed this from internet
 ipch/
 obj/
 GeneratedFiles/
