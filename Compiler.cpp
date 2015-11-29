@@ -101,7 +101,7 @@
 	//default sets extension and starter for filetypes
 	javac::javac()
 	{
-		prefix="\"javac -d ";
+		prefix="javac -d ";
 		ext="java";
 	}
 
