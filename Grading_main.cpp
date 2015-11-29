@@ -12,15 +12,10 @@ string myDriver = "C:\\Users\\ejsol\\Desktop\\bitester.java";
 void renamer(string, NameData);
 bool extension(string, string);
 
-int ericsMain(string wdiretory);
-//bool searchVectorForString(vector<string> vect, string value);
-//string compilationName(string& readFileName);
-//void getRidOfClass(string directory);
-//void myProcess(string command);
-//string concFiles(string* value, int count);          
+int ericsMain(string wdiretory);      
 
 bool EricsCode = true;
-//string studentName(string& readFileName);
+
 
 void fillVectorOfStudents(vector<Student>& students, string wdirectory);
 
