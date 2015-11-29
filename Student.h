@@ -89,5 +89,35 @@ public:
 		else
 			return NameParser::removeFileExtension(myDriver);
 	}
+
+	string getWorkingDir()
+	{
+		return wDir;
+	}
+
+	//Move the files from a vector to this students 
+	//dir and rename the files in the passed  vector 
+	//to keep track of them for moving to other directories later.
+	void addSupplementaryFileToCompList(vector<string>& supF)
+	{
+		for (int i = 0; i < supF.size(); i++) {
+			string compName = NameParser::getFileNameFromFilePath(supF[i]);
+			if (!haveDuplicateFile(compName)) {
+				string dest = wDir + "\\" + compName;
+				rename(supF[i].c_str(), dest.c_str());
+				relativeFileNames.push_back(compName);
+				supF[i] = dest;
+			}
+		}
+	}
+
+	bool haveDuplicateFile(string compName)
+	{
+		for (int i = 0; i < relativeFileNames.size(); i++){
+			if (relativeFileNames[i] == compName)
+				return true;
+		}
+		return false;
+	}
 };
 

@@ -8,7 +8,7 @@
 #include <direct.h>
 #include <vector>
 #include <map>
-string myDriver = "C:\\Users\\ejsol\\Desktop\\listDriver3.java";
+string myDriver = "C:\\Users\\ejsol\\Desktop\\bitester.java";
 void renamer(string, NameData);
 bool extension(string, string);
 
@@ -59,11 +59,14 @@ void fillVectorOfStudents(vector<Student>& students, string wdirectory)
 }
 
 int ericsMain(string wdirectory) {
+	vector<string> reqSupplementaryFiles;
+	reqSupplementaryFiles.push_back("C:\\Users\\ejsol\\Desktop\\SearchAlgorithm.java");
 	Lister files;
 	vector<Student> students;
 	fillVectorOfStudents(students, wdirectory);
 	for (std::vector<Student>::iterator itr = students.begin(); itr != students.end(); itr++) {
 		myDriver = itr->addDriver(myDriver);
+		itr->addSupplementaryFileToCompList(reqSupplementaryFiles);
 		int countOfFiles;
 		string* filesToCompile = itr->filesForCompilation(countOfFiles);
 		javac j;
@@ -97,8 +100,10 @@ int ericsMain(string wdirectory) {
 		}
 		Output.close();
 
-	return 0;
+		return 0;
 }
+
+
 
 int main()
 {
